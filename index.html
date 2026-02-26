@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>www.vkcalc.in - Multi Fin. Calculators & Tool Hub</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* Custom styles for neon glow and futuristic effects */
+    body {
+      background-color: #EAECA1; /* new light background */
+      font-family: 'Inter', sans-serif;
+      color: #000000; /* black text */
+    }
+    h1, h2, h3, h4, h5, h6, .futuristic {
+      font-family: 'Orbitron', sans-serif;
+      color: #000000;
+    }
+    /* Neon glow for text and borders (keeping cyan accent) */
+    .glow-text {
+      text-shadow: 0 0 5px #42f8f5, 0 0 10px #42f8f5, 0 0 20px #42f8f5;
+      color: #000000; /* override for readability */
+    }
+    .glow-border {
+      box-shadow: 0 0 5px #42f8f5, 0 0 10px rgba(66, 248, 245, 0.3);
+    }
+    .glow-border:hover {
+      box-shadow: 0 0 10px #42f8f5, 0 0 20px rgba(66, 248, 245, 0.6);
+    }
+    .card-hover {
+      background-color: #ffffff; /* white cards */
+      color: #000000;
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 15px #42f8f5, 0 0 30px rgba(66, 248, 245, 0.4);
+    }
+    /* Sidebar styling */
+    #sidebar {
+      background-color: #f5f5f5; /* light gray */
+      color: #000000;
+      border-right: 2px solid #42f8f5;
+    }
+    .sidebar-link {
+      position: relative;
+      display: inline-block;
+      color: #000000;
+    }
+    .sidebar-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #42f8f5;
+      box-shadow: 0 0 8px #42f8f5;
+      transition: width 0.3s;
+    }
+    .sidebar-link:hover::after {
+      width: 100%;
+    }
+    /* Navbar */
+    nav {
+      background-color: #ffffff;
+      border-bottom: 2px solid #42f8f5;
+      color: #000000;
+    }
+    .nav-link {
+      color: #000000;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #42f8f5;
+      box-shadow: 0 0 8px #42f8f5;
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    /* Mobile menu */
+    #mobileMenu {
+      background-color: #ffffff;
+    }
+    /* Ad placeholder sparkle (adjust text color for light bg) */
+    .ad-sparkle {
+      background: linear-gradient(45deg, #ffe68f, #ffd966, #ffe68f);
+      background-size: 200% 200%;
+      animation: sparkle 2s infinite;
+      color: #000000;
+    }
+    @keyframes sparkle {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Custom scrollbar for sidebar */
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: #e0e0e0;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: #42f8f5;
+      border-radius: 10px;
+    }
+    /* Section backgrounds */
+    .section-bg {
+      background-color: #ffffff;
+    }
+    button.bg-\[\#12151a\] {
+      background-color: #ffffff !important;
+      color: #000000;
+      border: 2px solid #42f8f5;
+    }
+    button.bg-\[\#12151a\]:hover {
+      background-color: #42f8f5 !important;
+      color: #000000;
+    }
+    /* Footer */
+    footer {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    /* Modal backgrounds */
+    #toolModal > div, #uploadModal > div {
+      background-color: #ffffff;
+      color: #000000;
+    }
+  </style>
+</head>
+<body class="bg-[#EAECA1] text-black">
+
+  <!-- Main container with flex (sidebar + content) -->
+  <div class="flex flex-col lg:flex-row min-h-screen">
+
+    <!-- Left Sidebar (collapsible on mobile) -->
+    <div id="sidebar" class="lg:w-80 bg-[#f5f5f5] border-r border-[#42f8f5] shadow-[0_0_10px_rgba(66,248,245,0.3)] lg:block hidden lg:flex-shrink-0 overflow-y-auto sidebar-scroll" style="max-height: 100vh; position: sticky; top: 0;">
+      <div class="p-6">
+        <!-- Sidebar Header -->
+        <div class="mb-8">
+          <div class="text-2xl font-bold text-black futuristic glow-text">VKCalc.in</div>
+          <div class="text-sm text-gray-700 mt-1">Multi Financial Calculators & Tool Hub</div>
+          <div class="text-xs text-[#f59e0b] mt-2">By VK Tax – Income Tax Practitioner</div>
+        </div>
+        <!-- Tool Sections (Collapsible) -->
+        <div class="space-y-6">
+          <!-- Category 1: Income Tax & Salary -->
+          <div>
+            <button class="category-btn w-full text-left text-black font-semibold py-2 px-3 bg-gray-200 rounded flex justify-between items-center" data-target="income-tax">
+              <span>🏆 Income Tax & Salary</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="income-tax" class="mt-2 space-y-2 text-sm hidden">
+              <div class="pl-4 text-[#42f8f5] text-xs">🔹 Core Income Tax Tools</div>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Income Tax Calculator</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Old vs New Regime Comparison</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Advance Tax Calculator</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">TDS Calculator</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Capital Gains Tax Calculator</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">234A/234B/234C Interest</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Presumptive Tax (44AD/44ADA)</a>
+              <div class="pl-4 text-[#42f8f5] text-xs mt-2">🔹 Deduction Calculators</div>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">80C Deduction</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">80D Deduction</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">HRA Exemption</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Home Loan Interest Deduction</a>
+              <div class="pl-4 text-[#42f8f5] text-xs mt-2">🔹 Salary & Retirement</div>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Salary/CTC Calculator</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">In-Hand Salary</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Gratuity Calculator</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Leave Encashment</a>
+              <a href="#" class="sidebar-link block pl-6 text-black hover:text-black">Professional Tax</a>
+            </div>
+          </div>
+          <!-- Category 2: EMI & Loan -->
+          <div>
+            <button class="category-btn w-full text-left text-black font-semibold py-2 px-3 bg-gray-200 rounded flex justify-between items-center" data-target="emi-loan">
+              <span>🏦 EMI & Loan Calculators</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="emi-loan" class="mt-2 space-y-2 text-sm hidden">
+              <div class="pl-4 text-[#42f8f5] text-xs">🔹 EMI Calculators</div>
+              <a href="#" class="sidebar-link block pl-6">EMI Calculator (General)</a>
+              <a href="#" class="sidebar-link block pl-6">Home Loan EMI</a>
+              <a href="#" class="sidebar-link block pl-6">Personal Loan EMI</a>
+              <a href="#" class="sidebar-link block pl-6">Car Loan EMI</a>
+              <a href="#" class="sidebar-link block pl-6">Education Loan EMI</a>
+              <div class="pl-4 text-[#42f8f5] text-xs mt-2">🔹 Loan Planning Tools</div>
+              <a href="#" class="sidebar-link block pl-6">Loan Eligibility</a>
+              <a href="#" class="sidebar-link block pl-6">Loan Affordability</a>
+              <a href="#" class="sidebar-link block pl-6">Prepayment Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Loan Comparison</a>
+              <a href="#" class="sidebar-link block pl-6">Amortization Schedule</a>
+              <a href="#" class="sidebar-link block pl-6">Interest Rate Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Debt-to-Income Ratio</a>
+            </div>
+          </div>
+          <!-- Category 3: Investment & SIP -->
+          <div>
+            <button class="category-btn w-full text-left text-black font-semibold py-2 px-3 bg-gray-200 rounded flex justify-between items-center" data-target="investment">
+              <span>📈 Investment & SIP</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="investment" class="mt-2 space-y-2 text-sm hidden">
+              <div class="pl-4 text-[#42f8f5] text-xs">🔹 Mutual Fund Tools</div>
+              <a href="#" class="sidebar-link block pl-6">SIP Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Lumpsum Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">SWP Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">STP Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">CAGR Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">XIRR Calculator</a>
+              <div class="pl-4 text-[#42f8f5] text-xs mt-2">🔹 Retirement & Long-Term</div>
+              <a href="#" class="sidebar-link block pl-6">Retirement Corpus</a>
+              <a href="#" class="sidebar-link block pl-6">Inflation Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Goal Planning</a>
+              <a href="#" class="sidebar-link block pl-6">Education Planning</a>
+              <div class="pl-4 text-[#42f8f5] text-xs mt-2">🔹 Government Scheme</div>
+              <a href="#" class="sidebar-link block pl-6">PPF Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">NPS Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Sukanya Samriddhi</a>
+            </div>
+          </div>
+          <!-- Category 4: Banking & Savings -->
+          <div>
+            <button class="category-btn w-full text-left text-black font-semibold py-2 px-3 bg-gray-200 rounded flex justify-between items-center" data-target="banking">
+              <span>💰 Banking & Savings</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="banking" class="mt-2 space-y-2 text-sm hidden">
+              <a href="#" class="sidebar-link block pl-6">FD Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">RD Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Recurring Deposit Maturity</a>
+              <a href="#" class="sidebar-link block pl-6">Savings Account Interest</a>
+              <a href="#" class="sidebar-link block pl-6">Simple Interest</a>
+              <a href="#" class="sidebar-link block pl-6">Compound Interest</a>
+            </div>
+          </div>
+          <!-- Category 5: GST -->
+          <div>
+            <button class="category-btn w-full text-left text-black font-semibold py-2 px-3 bg-gray-200 rounded flex justify-between items-center" data-target="gst">
+              <span>🧾 GST Calculators</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="gst" class="mt-2 space-y-2 text-sm hidden">
+              <a href="#" class="sidebar-link block pl-6">GST Calculator (Add/Remove)</a>
+              <a href="#" class="sidebar-link block pl-6">GST Interest Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">GST Late Fee Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">ITC Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Reverse Charge GST</a>
+              <a href="#" class="sidebar-link block pl-6">GST Refund Calculator</a>
+            </div>
+          </div>
+          <!-- Category 6: Business & Accounting -->
+          <div>
+            <button class="category-btn w-full text-left text-black font-semibold py-2 px-3 bg-gray-200 rounded flex justify-between items-center" data-target="business">
+              <span>💼 Business & Accounting</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="business" class="mt-2 space-y-2 text-sm hidden">
+              <a href="#" class="sidebar-link block pl-6">Break-Even Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Gross Profit Margin</a>
+              <a href="#" class="sidebar-link block pl-6">Net Profit Margin</a>
+              <a href="#" class="sidebar-link block pl-6">Depreciation (SLM/WDV)</a>
+              <a href="#" class="sidebar-link block pl-6">Working Capital</a>
+              <a href="#" class="sidebar-link block pl-6">Current Ratio</a>
+              <a href="#" class="sidebar-link block pl-6">DSCR Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Contribution Margin</a>
+            </div>
+          </div>
+          <!-- Category 7: Financial Mathematics -->
+          <div>
+            <button class="category-btn w-full text-left text-black font-semibold py-2 px-3 bg-gray-200 rounded flex justify-between items-center" data-target="finmath">
+              <span>📊 Financial Mathematics</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="finmath" class="mt-2 space-y-2 text-sm hidden">
+              <a href="#" class="sidebar-link block pl-6">NPV Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">IRR Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">WACC Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">Payback Period</a>
+              <a href="#" class="sidebar-link block pl-6">Annuity Calculator</a>
+              <a href="#" class="sidebar-link block pl-6">PV / FV Calculator</a>
+            </div>
+          </div>
+        </div>
+        <!-- Ad Space in Sidebar (160x600) -->
+        <div class="mt-8 p-4 bg-gray-200 border border-[#42f8f5] rounded-lg text-center ad-sparkle">
+          <div class="text-xs font-bold text-black">SPACE FOR ADS</div>
+          <div class="text-2xl font-bold text-black">160x600</div>
+          <div class="text-xs text-black">Adstera / Google AdSense</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area (right side) -->
+    <div class="flex-1 flex flex-col min-w-0">
+      
+      <!-- Top Navbar -->
+      <nav class="bg-white border-b border-[#42f8f5] shadow-[0_0_10px_rgba(66,248,245,0.3)] py-4 px-6 flex items-center justify-between">
+        <!-- Logo and mobile sidebar toggle -->
+        <div class="flex items-center space-x-4">
+          <button id="sidebarToggle" class="lg:hidden text-black text-2xl">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-brain text-[#42f8f5] text-2xl glow-text"></i>
+            <span class="text-xl font-bold futuristic glow-text">VKCalc.in</span>
+          </div>
+        </div>
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8 text-black">
+          <a href="#" class="nav-link">Home</a>
+          <a href="#" class="nav-link">Calculators</a>
+          <a href="#" class="nav-link">Blog</a>
+          <a href="#" class="nav-link">About</a>
+          <a href="#" class="nav-link">Contact</a>
+          <a href="#" class="bg-[#f59e0b] text-black px-4 py-2 rounded-md font-semibold hover:bg-[#42f8f5] transition">🔶 File ITR</a>
+        </div>
+        <!-- Mobile Hamburger -->
+        <div class="md:hidden">
+          <button id="mobileMenuBtn" class="text-black text-2xl">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Menu (hidden by default) -->
+      <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-[#42f8f5] p-4 flex flex-col space-y-2">
+        <a href="#" class="nav-link py-2">Home</a>
+        <a href="#" class="nav-link py-2">Calculators</a>
+        <a href="#" class="nav-link py-2">Blog</a>
+        <a href="#" class="nav-link py-2">About</a>
+        <a href="#" class="nav-link py-2">Contact</a>
+        <a href="#" class="bg-[#f59e0b] text-black px-4 py-2 rounded-md text-center font-semibold">🔶 File ITR</a>
+      </div>
+
+      <!-- Main Content Container -->
+      <main class="p-6 space-y-12">
+        
+        <!-- Hero Section -->
+        <section class="text-center py-12 bg-white rounded-2xl glow-border">
+          <h1 class="text-4xl md:text-5xl font-bold futuristic text-black glow-text">Multi Fin. Calculators & Tool Hub</h1>
+          <p class="text-xl text-gray-700 mt-4">By VK Tax – Income Tax Practitioner</p>
+          <p class="text-lg text-[#f59e0b] mt-2">Accurate, Fast, India‑focused Financial Tools</p>
+          <div class="mt-8 flex justify-center space-x-4">
+            <button class="bg-white border-2 border-[#42f8f5] text-black px-8 py-3 rounded-lg font-semibold hover:bg-[#42f8f5] transition">Start Calculating</button>
+            <button class="bg-[#f59e0b] text-black px-8 py-3 rounded-lg font-semibold hover:bg-[#42f8f5] transition">File ITR with VK Tax</button>
+          </div>
+        </section>
+
+        <!-- FEATURED CALCULATORS (High Traffic Block) -->
+        <section>
+          <h2 class="text-3xl font-bold futuristic text-black mb-6 glow-text">📍 Featured Calculators</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card template -->
+            <div class="bg-white p-6 rounded-xl border-t-4 border-[#42f8f5] card-hover cursor-pointer" onclick="openToolModal('Income Tax Calculator')">
+              <i class="fas fa-calculator text-3xl text-[#42f8f5] mb-4"></i>
+              <h3 class="text-xl font-semibold text-black">Income Tax Calculator</h3>
+              <p class="text-gray-700 text-sm mt-2">Old vs New Regime, instant results</p>
+              <span class="text-[#42f8f5] inline-block mt-4 hover:underline">Use Tool →</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl border-t-4 border-[#42f8f5] card-hover cursor-pointer" onclick="openToolModal('HRA Calculator')">
+              <i class="fas fa-home text-3xl text-[#42f8f5] mb-4"></i>
+              <h3 class="text-xl font-semibold text-black">HRA Calculator</h3>
+              <p class="text-gray-700 text-sm mt-2">Exemption under section 10(13A)</p>
+              <span class="text-[#42f8f5] inline-block mt-4 hover:underline">Use Tool →</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl border-t-4 border-[#42f8f5] card-hover cursor-pointer" onclick="openToolModal('Advance Tax Calculator')">
+              <i class="fas fa-clock text-3xl text-[#42f8f5] mb-4"></i>
+              <h3 class="text-xl font-semibold text-black">Advance Tax Calculator</h3>
+              <p class="text-gray-700 text-sm mt-2">Due dates & interest calculations</p>
+              <span class="text-[#42f8f5] inline-block mt-4 hover:underline">Use Tool →</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl border-t-4 border-[#42f8f5] card-hover cursor-pointer" onclick="openToolModal('EMI Calculator')">
+              <i class="fas fa-money-bill-wave text-3xl text-[#42f8f5] mb-4"></i>
+              <h3 class="text-xl font-semibold text-black">EMI Calculator</h3>
+              <p class="text-gray-700 text-sm mt-2">Loan EMI, principal & interest</p>
+              <span class="text-[#42f8f5] inline-block mt-4 hover:underline">Use Tool →</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl border-t-4 border-[#42f8f5] card-hover cursor-pointer" onclick="openToolModal('SIP Calculator')">
+              <i class="fas fa-chart-line text-3xl text-[#42f8f5] mb-4"></i>
+              <h3 class="text-xl font-semibold text-black">SIP Calculator</h3>
+              <p class="text-gray-700 text-sm mt-2">Mutual fund returns estimation</p>
+              <span class="text-[#42f8f5] inline-block mt-4 hover:underline">Use Tool →</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl border-t-4 border-[#42f8f5] card-hover cursor-pointer" onclick="openToolModal('GST Calculator')">
+              <i class="fas fa-percent text-3xl text-[#42f8f5] mb-4"></i>
+              <h3 class="text-xl font-semibold text-black">GST Calculator</h3>
+              <p class="text-gray-700 text-sm mt-2">Add or remove GST easily</p>
+              <span class="text-[#42f8f5] inline-block mt-4 hover:underline">Use Tool →</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Full Tools Grid (all categories) -->
+        <section>
+          <h2 class="text-3xl font-bold futuristic text-black mb-6 glow-text">🧮 All Calculators</h2>
+          <!-- Income Tax & Salary -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-[#42f8f5] mb-4">🏆 Income Tax & Salary Calculators</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-white p-4 rounded-lg card-hover">
+                <div class="text-[#42f8f5] font-semibold mb-2">🔹 Core Income Tax</div>
+                <ul class="space-y-1 text-sm text-black">
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Income Tax Calculator')">Income Tax Calculator</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Old vs New Regime Comparison')">Old vs New Regime Comparison</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Advance Tax Calculator')">Advance Tax Calculator</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('TDS Calculator')">TDS Calculator</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Capital Gains Tax Calculator')">Capital Gains Tax</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('234A/234B/234C Interest')">234A/234B/234C Interest</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Presumptive Tax (44AD/44ADA)')">Presumptive Tax</li>
+                </ul>
+              </div>
+              <div class="bg-white p-4 rounded-lg card-hover">
+                <div class="text-[#42f8f5] font-semibold mb-2">🔹 Deduction Calculators</div>
+                <ul class="space-y-1 text-sm text-black">
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('80C Deduction')">80C Deduction</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('80D Deduction')">80D Deduction</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('HRA Exemption')">HRA Exemption</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Home Loan Interest Deduction')">Home Loan Interest</li>
+                </ul>
+              </div>
+              <div class="bg-white p-4 rounded-lg card-hover">
+                <div class="text-[#42f8f5] font-semibold mb-2">🔹 Salary & Retirement</div>
+                <ul class="space-y-1 text-sm text-black">
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Salary/CTC Calculator')">Salary/CTC</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('In-Hand Salary')">In-Hand Salary</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Gratuity Calculator')">Gratuity</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Leave Encashment')">Leave Encashment</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Professional Tax')">Professional Tax</li>
+                </ul>
+              </div>
+              <!-- ad space 300x250 -->
+              <div class="bg-gray-200 p-4 rounded-lg border border-[#42f8f5] flex flex-col items-center justify-center ad-sparkle">
+                <div class="text-xs font-bold text-black">SPACE FOR ADS</div>
+                <div class="text-2xl font-bold text-black">300x250</div>
+                <div class="text-xs text-black">Adstera / Google</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EMI & Loan Calculators (abbreviated) -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-[#42f8f5] mb-4">🏦 EMI & Loan Calculators</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-white p-4 rounded-lg card-hover">
+                <div class="text-[#42f8f5] font-semibold mb-2">🔹 EMI Calculators</div>
+                <ul class="space-y-1 text-sm text-black">
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('EMI Calculator (General)')">EMI (General)</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Home Loan EMI')">Home Loan EMI</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Personal Loan EMI')">Personal Loan EMI</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Car Loan EMI')">Car Loan EMI</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Education Loan EMI')">Education Loan EMI</li>
+                </ul>
+              </div>
+              <div class="bg-white p-4 rounded-lg card-hover">
+                <div class="text-[#42f8f5] font-semibold mb-2">🔹 Loan Planning</div>
+                <ul class="space-y-1 text-sm text-black">
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Loan Eligibility')">Loan Eligibility</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Loan Affordability')">Loan Affordability</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Prepayment Calculator')">Prepayment</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Loan Comparison')">Loan Comparison</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Amortization Schedule')">Amortization</li>
+                </ul>
+              </div>
+              <div class="bg-white p-4 rounded-lg card-hover">
+                <div class="text-[#42f8f5] font-semibold mb-2">🔹 More</div>
+                <ul class="space-y-1 text-sm text-black">
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Interest Rate Calculator')">Interest Rate</li>
+                  <li class="sidebar-link cursor-pointer" onclick="openToolModal('Debt-to-Income Ratio')">Debt-to-Income</li>
+                </ul>
+              </div>
+              <!-- ad space -->
+              <div class="bg-gray-200 p-4 rounded-lg border border-[#42f8f5] flex flex-col items-center justify-center ad-sparkle">
+                <div class="text-xs font-bold text-black">SPACE FOR ADS</div>
+                <div class="text-2xl font-bold text-black">300x250</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional categories (brief placeholders) -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-[#42f8f5] mb-4">📈 Investment & SIP Calculators</h3>
+            <p class="text-sm text-gray-700">(Full list in actual implementation – SIP, SWP, PPF, NPS, etc.)</p>
+          </div>
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-[#42f8f5] mb-4">💰 Banking & Savings Calculators</h3>
+            <p class="text-sm text-gray-700">(FD, RD, Compound Interest, etc.)</p>
+          </div>
+          <div class="mb-12">
+            <h3 class="text-2xl font-semibold text-[#42f8f5] mb-4">🧾 GST Calculators</h3>
+            <p class="text-sm text-gray-700">(GST, Interest, Late Fee, ITC, etc.)</p>
+          </div>
+        </section>
+
+        <!-- Ad Banner 728x90 -->
+        <div class="w-full bg-gray-200 p-4 rounded-lg border border-[#42f8f5] flex flex-col items-center justify-center ad-sparkle">
+          <div class="text-xs font-bold text-black">SPACE FOR ADS</div>
+          <div class="text-2xl font-bold text-black">728x90</div>
+          <div class="text-xs text-black">Adstera / Google AdSense</div>
+        </div>
+
+        <!-- How VKCALC Helps -->
+        <section class="bg-white p-8 rounded-2xl glow-border">
+          <h2 class="text-3xl font-bold futuristic text-black mb-6 glow-text">More Than Just Calculators</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div><i class="fas fa-lightbulb text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">Concept Explanations</h3><p class="text-sm text-gray-700">Clear breakdown of financial terms</p></div>
+            <div><i class="fas fa-chart-pie text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">Practical Examples</h3><p class="text-sm text-gray-700">Real-life scenarios</p></div>
+            <div><i class="fas fa-coins text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">Tax Saving Tips</h3><p class="text-sm text-gray-700">Section-wise strategies</p></div>
+            <div><i class="fas fa-gavel text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">Legal Compliance</h3><p class="text-sm text-gray-700">Stay updated with laws</p></div>
+          </div>
+        </section>
+
+        <!-- About VK Tax -->
+        <section class="bg-white p-8 rounded-2xl glow-border flex flex-col md:flex-row items-center gap-8">
+          <div class="w-32 h-32 rounded-full bg-gray-200 border-4 border-[#42f8f5] flex items-center justify-center text-5xl"><i class="fas fa-user-tie text-[#42f8f5]"></i></div>
+          <div>
+            <h2 class="text-3xl font-bold futuristic text-black glow-text">VK Tax</h2>
+            <p class="mt-2 text-gray-700">Led by a qualified Income Tax Practitioner (M.Com & LL.B.), focused on helping individuals file accurate and compliant tax returns.</p>
+            <ul class="list-disc list-inside mt-4 text-gray-700">
+              <li>Individual ITR Filing</li>
+              <li>Capital Gains Advisory</li>
+              <li>Presumptive Tax (44AD/44ADA)</li>
+              <li>Advance Tax Planning</li>
+            </ul>
+            <button class="mt-4 bg-[#f59e0b] text-black px-6 py-2 rounded-md font-semibold hover:bg-[#42f8f5]">🔶 Book Consultation</button>
+          </div>
+        </section>
+
+        <!-- Services Section -->
+        <section>
+          <h2 class="text-3xl font-bold futuristic text-black mb-6 glow-text">Professional Income Tax Filing & Advisory</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-xl card-hover"><i class="fas fa-file-invoice text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">ITR Filing for Salaried</h3><button class="mt-2 text-[#42f8f5]">File ITR →</button></div>
+            <div class="bg-white p-6 rounded-xl card-hover"><i class="fas fa-chart-line text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">Capital Gains Computation</h3><button class="mt-2 text-[#42f8f5]">Learn More →</button></div>
+            <div class="bg-white p-6 rounded-xl card-hover"><i class="fas fa-shield-alt text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">Tax Planning & Deductions</h3><button class="mt-2 text-[#42f8f5]">Optimize →</button></div>
+            <div class="bg-white p-6 rounded-xl card-hover"><i class="fas fa-headset text-3xl text-[#42f8f5]"></i><h3 class="font-semibold mt-2 text-black">Notice Handling Support</h3><button class="mt-2 text-[#42f8f5]">Get Help →</button></div>
+          </div>
+        </section>
+
+        <!-- Blog Preview -->
+        <section>
+          <h2 class="text-3xl font-bold futuristic text-black mb-6 glow-text">Latest Financial Guides</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-xl card-hover"><h3 class="font-semibold text-black">Old vs New Tax Regime</h3><p class="text-sm text-gray-700 mt-2">Which one saves more?</p><span class="text-[#42f8f5]">Read →</span></div>
+            <div class="bg-white p-6 rounded-xl card-hover"><h3 class="font-semibold text-black">How to Save Tax Under 80C</h3><p class="text-sm text-gray-700 mt-2">Top investments</p><span class="text-[#42f8f5]">Read →</span></div>
+            <div class="bg-white p-6 rounded-xl card-hover"><h3 class="font-semibold text-black">Capital Gains on Property</h3><p class="text-sm text-gray-700 mt-2">Indexation benefits</p><span class="text-[#42f8f5]">Read →</span></div>
+          </div>
+          <div class="text-center mt-6"><button class="bg-white border border-[#42f8f5] text-black px-6 py-2 rounded-md hover:bg-[#42f8f5]">Read Financial Guides</button></div>
+        </section>
+
+        <!-- Why Trust VKCALC -->
+        <section class="bg-white p-8 rounded-2xl glow-border">
+          <h2 class="text-3xl font-bold futuristic text-black mb-4 glow-text">Why Trust VKCALC?</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div><i class="fas fa-graduation-cap text-3xl text-[#42f8f5]"></i><p class="mt-2 text-black">M.Com + LL.B.</p></div>
+            <div><i class="fas fa-map-marker-alt text-3xl text-[#42f8f5]"></i><p class="mt-2 text-black">India-specific</p></div>
+            <div><i class="fas fa-sync-alt text-3xl text-[#42f8f5]"></i><p class="mt-2 text-black">Updated Tax Laws</p></div>
+            <div><i class="fas fa-comments text-3xl text-[#42f8f5]"></i><p class="mt-2 text-black">Transparent</p></div>
+          </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="w-full bg-gray-200 p-12 rounded-2xl text-center border border-[#42f8f5]">
+          <h2 class="text-3xl font-bold text-black glow-text">Ready to Calculate or File Your Return?</h2>
+          <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+            <button class="bg-white border-2 border-[#42f8f5] text-black px-8 py-3 rounded-lg font-semibold hover:bg-[#42f8f5]">🔵 Start Calculating</button>
+            <button class="bg-[#f59e0b] text-black px-8 py-3 rounded-lg font-semibold hover:bg-[#42f8f5]">🟡 File ITR with VK Tax</button>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-white p-8 rounded-2xl grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+          <div>
+            <h4 class="font-bold text-[#42f8f5] mb-2">Calculators</h4>
+            <ul class="text-black"><li>Income Tax</li><li>EMI & Loans</li><li>Investment</li><li>GST</li></ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#42f8f5] mb-2">Services</h4>
+            <ul class="text-black"><li>ITR Filing</li><li>Capital Gains</li><li>Advance Tax</li></ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#42f8f5] mb-2">Company</h4>
+            <ul class="text-black"><li>About</li><li>Contact</li><li>Privacy</li><li>Disclaimer</li><li>Terms</li></ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#42f8f5] mb-2">Contact</h4>
+            <ul class="text-black"><li><i class="fab fa-whatsapp"></i> WhatsApp</li><li><i class="far fa-envelope"></i> Email</li></ul>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal for Tool UIs -->
+  <div id="toolModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-8 rounded-2xl w-11/12 md:w-1/2 border-2 border-[#42f8f5] shadow-[0_0_30px_rgba(66,248,245,0.6)]">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modalTitle" class="text-2xl font-bold futuristic glow-text text-black">Tool Name</h3>
+        <button onclick="closeModal()" class="text-black text-2xl">&times;</button>
+      </div>
+      <div id="modalContent" class="text-gray-700">
+        <p>This is a demo of the <span id="toolNameSpan"></span>. In the full version, actual calculation logic would be implemented.</p>
+        <div class="mt-4 p-4 bg-gray-100 rounded">
+          <label class="block text-black">Sample Input:</label>
+          <input type="text" class="w-full p-2 bg-white border border-[#42f8f5] rounded mt-1 text-black" placeholder="Enter value">
+        </div>
+        <button class="mt-4 bg-[#42f8f5] text-black px-4 py-2 rounded">Calculate (Demo)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- File Upload Modal (for drag-and-drop functionality) -->
+  <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-8 rounded-2xl w-11/12 md:w-1/2 border-2 border-[#42f8f5] shadow-[0_0_30px_rgba(66,248,245,0.6)]">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-2xl font-bold futuristic glow-text text-black">File Upload</h3>
+        <button onclick="closeUploadModal()" class="text-black text-2xl">&times;</button>
+      </div>
+      <div id="dropZone" class="border-2 border-dashed border-[#42f8f5] p-8 text-center rounded-lg cursor-pointer hover:bg-gray-100">
+        <i class="fas fa-cloud-upload-alt text-4xl text-[#42f8f5] mb-2"></i>
+        <p class="text-black">Drag & drop a file here, or click to select</p>
+        <input type="file" id="fileInput" class="hidden">
+      </div>
+      <div id="uploadProgress" class="mt-4 hidden">
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+          <div id="progressBar" class="bg-[#42f8f5] h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        <p id="progressText" class="text-center text-black">Uploading...</p>
+      </div>
+      <div id="previewArea" class="mt-4 hidden">
+        <img id="imagePreview" class="max-h-40 mx-auto border border-[#42f8f5] rounded">
+        <button id="downloadBtn" class="mt-2 bg-[#42f8f5] text-black px-4 py-2 rounded w-full">Download Processed File</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Button to open File Upload (optional) -->
+  <div class="fixed bottom-6 right-6">
+    <button onclick="openUploadModal()" class="bg-white border-2 border-[#42f8f5] text-black p-4 rounded-full shadow-lg hover:bg-[#42f8f5]">
+      <i class="fas fa-upload text-2xl"></i>
+    </button>
+  </div>
+
+  <script>
+    // Sidebar toggle on mobile
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('hidden');
+      });
+    }
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Collapsible sidebar categories
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const targetId = btn.dataset.target;
+        const targetDiv = document.getElementById(targetId);
+        targetDiv.classList.toggle('hidden');
+        const icon = btn.querySelector('i');
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up');
+      });
+    });
+
+    // Modal for tools
+    const toolModal = document.getElementById('toolModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const toolNameSpan = document.getElementById('toolNameSpan');
+
+    window.openToolModal = (toolName) => {
+      modalTitle.innerText = toolName;
+      toolNameSpan.innerText = toolName;
+      toolModal.classList.remove('hidden');
+    };
+
+    window.closeModal = () => {
+      toolModal.classList.add('hidden');
+    };
+
+    // File Upload Modal
+    const uploadModal = document.getElementById('uploadModal');
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const previewArea = document.getElementById('previewArea');
+    const imagePreview = document.getElementById('imagePreview');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    window.openUploadModal = () => {
+      uploadModal.classList.remove('hidden');
+    };
+
+    window.closeUploadModal = () => {
+      uploadModal.classList.add('hidden');
+      // Reset
+      uploadProgress.classList.add('hidden');
+      previewArea.classList.add('hidden');
+      progressBar.style.width = '0%';
+    };
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('border-[#42f8f5]', 'bg-gray-100');
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('bg-gray-100');
+    });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('bg-gray-100');
+      const files = e.dataTransfer.files;
+      if (files.length) handleFile(files[0]);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleFile(e.target.files[0]);
+    });
+
+    function handleFile(file) {
+      // Simulate upload progress
+      uploadProgress.classList.remove('hidden');
+      previewArea.classList.add('hidden');
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+          clearInterval(interval);
+          progressText.innerText = 'Processing...';
+          setTimeout(() => {
+            progressText.innerText = 'Done!';
+            // Show preview for images
+            if (file.type.startsWith('image/')) {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                previewArea.classList.remove('hidden');
+              };
+              reader.readAsDataURL(file);
+            } else {
+              // For non-images, show a generic preview
+              previewArea.classList.remove('hidden');
+              imagePreview.style.display = 'none';
+              // Add text info
+              const text = document.createElement('p');
+              text.innerText = `File "${file.name}" processed. Click download to get a sample.`;
+              previewArea.innerHTML = '';
+              previewArea.appendChild(text);
+            }
+            // Setup download
+            downloadBtn.onclick = () => {
+              const blob = new Blob(['This is a simulated processed file content.'], { type: 'text/plain' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'processed_' + file.name;
+              a.click();
+              URL.revokeObjectURL(url);
+            };
+          }, 1000);
+        }
+      }, 200);
+    }
+
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      if (event.target === toolModal) closeModal();
+      if (event.target === uploadModal) closeUploadModal();
+    };
+  </script>
+</body>
+</html>
